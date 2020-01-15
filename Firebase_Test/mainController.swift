@@ -27,25 +27,16 @@ class mainController: UIViewController {
                     
                 } else {
                     
-                    var ok = false
-                    for document in querySnapshot!.documents {
-                        let documentEmail: String = document.data()["email"] as! String
-                        let userEmail: String = user.email!
-                        
-                        if (documentEmail == userEmail){
-                            ok = true
-                            self.welcomeMessage.text = "Bienvenido \(document.data()["name"]!) \(document.data()["lastname"]!)"
-                            break
+                    Firestore.firestore().collection("Users").whereField("email", isEqualTo: user.email!).getDocuments() { (querySnapshot, error) in
+                        if let error = error {
+                            
+                            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Aceptar", style: .cancel, handler: nil))
+                            self.present(alert, animated: true)
+                            
+                        } else {
+                            self.welcomeMessage.text = "Bienvenido \(querySnapshot!.documents[0].data()["name"] as! String) \(querySnapshot!.documents[0].data()["lastname"] as! String)"
                         }
-                        
-                    }
-                    
-                    if !ok {
-                        
-                        let alert = UIAlertController(title: "Error", message: "No hay datos del usuario logueado", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "Aceptar", style: .cancel, handler: nil))
-                        self.present(alert, animated: true)
-                        
                     }
                 }
             }

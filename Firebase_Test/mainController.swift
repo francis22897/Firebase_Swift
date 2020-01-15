@@ -13,6 +13,8 @@ import FirebaseFirestore
 class mainController: UIViewController {
 
     @IBOutlet weak var welcomeMessage: UILabel!
+    @IBOutlet weak var emailTextField: UILabel!
+    @IBOutlet weak var tokenTextField: UILabel!
     
     override func viewDidLoad() {
         self.navigationItem.setHidesBackButton(true, animated: false)
@@ -36,6 +38,8 @@ class mainController: UIViewController {
                             
                         } else {
                             self.welcomeMessage.text = "Bienvenido \(querySnapshot!.documents[0].data()["name"] as! String) \(querySnapshot!.documents[0].data()["lastname"] as! String)"
+                            self.emailTextField.text = "Email: \(querySnapshot!.documents[0].data()["email"] as! String)"
+                            self.tokenTextField.text = "Token: \(querySnapshot!.documents[0].documentID)"
                         }
                     }
                 }

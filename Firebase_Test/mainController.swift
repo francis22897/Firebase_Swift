@@ -39,7 +39,7 @@ class mainController: UIViewController {
                         } else {
                             self.welcomeMessage.text = "Bienvenido \(querySnapshot!.documents[0].data()["name"] as! String) \(querySnapshot!.documents[0].data()["lastname"] as! String)"
                             self.emailTextField.text = "Email: \(querySnapshot!.documents[0].data()["email"] as! String)"
-                            self.tokenTextField.text = "Token: \(querySnapshot!.documents[0].documentID)"
+                            self.tokenTextField.text = "Token: \(user.uid)"
                         }
                     }
                 }
